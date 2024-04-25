@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.mapper.MemberMapper">
+
+	<sql id="memberColumns">
+		  idx
+		, member_id
+		, member_pw
+		, member_name
+		, member_gender
+		, member_mail
+		, member_birthday
+		, admin_ck
+		, delete_yn
+		, insert_time
+		, update_time
+		, delete_time
+	</sql>
+	
+	<insert id="insertMember" parameterType="MemberDTO">
+		INSERT INTO member (<include refid="memberColumns" />)
+		VALUES
+		(
+			  #{idx}
+			, #{memberId}
+			, #{memberPw}
+			, #{memberName}
+			, #{memberGender}
+			, #{memberMail}
+			, #{memberBirthday}
+			, 0
+			, IFNULL(#{deleteYn}, 'N')
+			, NOW()
+			, NULL
+			, NULL
+		)
+	</insert>
+	
+	<select id="selectMemberDetail" parameterType="String" resultType="MemberDTO">
+		SELECT
+			<include refid="memberColumns" />
+		FROM
+			member
+		WHERE
+			delete_yn = 'N'
+		AND
+			member_id = #{memberId}
+	</select>
+	
+	<update id ="updateMember" parameterType="MemberDTO">
+		UPDATE member
+		SET   update_time = NOW()
+			, member_id = #{memberId}
+			<if test = "memberPw != null and memberPw != ''">
+			, member_pw = #{memberPw}
+			</if>
+			, member_name = #{memberName}
+			, member_gender = #{memberGender}
+			, member_mail = #{memberMail}
+			, member_birthday = #{memberBirthday}
+			, admin_ck = #{adminCk}
+			, delete_yn = IFNULL(#{deleteYn}, 'N')
+		WHERE
+			idx = #{idx}
+	</update>
+	
+	<update id="deleteMember" parameterType="long">
+		UPDATE member
+		SET   delete_yn = 'Y'
+			, delete_time = NOW()
+		WHERE
+			idx = #{idx}
+	</update>
+	
+	<!-- 회원 수 카운팅 (ID 중복 체크) -->
+    <select id="isMemberIdDuplicate" parameterType="string" resultType="int">
+       SELECT
+           COUNT(*)
+       FROM
+           member
+       WHERE
+           member_id = #{memberId}
+           AND delete_yn = 'N'
+    </select>
+    
+    <select id="selectMemberByLoginIdAndPassword" parameterType="MemberDTO" resultType="int">
+    SELECT
+        COUNT(*)
+    FROM
+        member
+    WHERE
+        member_id = #{memberId}
+        AND member_pw = #{memberPw}
+        AND delete_yn = 'N'
+	</select>
+</mapper>

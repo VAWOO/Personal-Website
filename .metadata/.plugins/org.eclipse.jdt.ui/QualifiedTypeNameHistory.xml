@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.board.paging.Criteria"/>
+    <fullyQualifiedTypeName name="com.board.domain.CommomDTO"/>
+    <fullyQualifiedTypeName name="com.board.paging.paginationInfo"/>
+    <fullyQualifiedTypeName name="com.board.paging.PaginationInfo"/>
+    <fullyQualifiedTypeName name="org.springframework.web.util.UriComponentsBuilder"/>
+    <fullyQualifiedTypeName name="org.springframework.web.util.UriComponents"/>
+    <fullyQualifiedTypeName name="com.mysql.cj.util.StringUtils"/>
+    <fullyQualifiedTypeName name="org.thymeleaf.util.StringUtils"/>
+    <fullyQualifiedTypeName name="io.micrometer.common.util.StringUtils"/>
+    <fullyQualifiedTypeName name="java.util.Map"/>
+</qualifiedTypeNameHistroy>
