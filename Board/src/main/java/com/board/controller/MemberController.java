@@ -44,6 +44,44 @@ public class MemberController extends UiUtils
 		return "member/join";
 	}
 	
+	@GetMapping(value = "/member/login.do")
+	public String openMemberLogin(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
+	{
+		if (memberId == null)
+		{
+			model.addAttribute("member", new MemberDTO());
+		}
+		else
+		{
+			MemberDTO member = memberService.getMemberDetail(memberId);
+			if (member == null || "Y".equals(member.getDeleteYn()))
+			{
+				return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list.do", Method.GET, null, model);
+			}
+			model.addAttribute("member", member);
+		}
+		
+		return "member/login";
+	}
+	
+	@GetMapping(value = "/member/view.do")
+	public String openMemberDetail(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
+	{
+		if (memberId == null)
+		{
+			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
+		}
+		
+		MemberDTO member = memberService.getMemberDetail(memberId);
+		if(member == null || "Y".equals(member.getDeleteYn()))
+		{
+			return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list.do", Method.GET, null, model);
+		}
+		model.addAttribute("member", member);
+		
+		return "member/view";
+	}
+	
 	@PostMapping(value = "/member/register.do")
 	public String registerMember(@ModelAttribute("params") final MemberDTO params, Model model)
 	{
@@ -67,26 +105,6 @@ public class MemberController extends UiUtils
 		return showMessageWithRedirect("회원 등록이 완료되었습니다.", "/board/list.do", Method.GET, null, model);
 	}
 	
-	@GetMapping(value = "/member/login.do")
-	public String openMemberLogin(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
-	{
-		if (memberId == null)
-		{
-			model.addAttribute("member", new MemberDTO());
-		}
-		else
-		{
-			MemberDTO member = memberService.getMemberDetail(memberId);
-			if (member == null || "Y".equals(member.getDeleteYn()))
-			{
-				return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list.do", Method.GET, null, model);
-			}
-			model.addAttribute("member", member);
-		}
-		
-		return "member/login";
-	}
-	
 	@PostMapping(value = "/member/login.do")
 	public String loginMember(@ModelAttribute("params") final MemberDTO params, Model model)
 	{
@@ -108,24 +126,6 @@ public class MemberController extends UiUtils
 		}
 		
 		return showMessageWithRedirect("로그인 완료되었습니다.", "/board/list.do", Method.GET, null, model);
-	}
-	
-	@GetMapping(value = "/member/view.do")
-	public String openMemberDetail(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
-	{
-		if (memberId == null)
-		{
-			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
-		}
-		
-		MemberDTO member = memberService.getMemberDetail(memberId);
-		if(member == null || "Y".equals(member.getDeleteYn()))
-		{
-			return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list.do", Method.GET, null, model);
-		}
-		model.addAttribute("member", member);
-		
-		return "member/view";
 	}
 	
 	@PostMapping(value = "/member/delete.do")

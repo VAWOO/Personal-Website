@@ -1,0 +1,19 @@
+package com.board.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class BootstrapController
+{
+    @GetMapping("/")
+    public String index(Model model) {
+        return "bootstrap/index"; // 이 부분은 templates 폴더 내의 bootstrap/index.html 경로에 맞게 수정해주세요.
+    }
+    
+    @GetMapping("/resume")
+    public String resume(Model model) {
+        return "bootstrap/resume"; // 이 부분은 templates 폴더 내의 bootstrap/index.html 경로에 맞게 수정해주세요.
+    }
+}

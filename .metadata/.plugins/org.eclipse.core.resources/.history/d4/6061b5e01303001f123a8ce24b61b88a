@@ -1,0 +1,15 @@
+package com.board.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class BootstrapController
+{
+	@GetMapping(value = "/member/join.do")
+	public String dashboard()
+	{
+		return "index";
+	}
+
+}
