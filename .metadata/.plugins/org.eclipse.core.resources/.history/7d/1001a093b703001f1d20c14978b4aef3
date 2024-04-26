@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>This page is a join page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 12"><polygon points="8 12 0 0 16 0"></polygon></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px top 50%;
+            background-size: 8px;
+            cursor: pointer;
+        }
+
+        #duplicateMessage {
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #registerButton {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        #registerButton:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <form th:action="@{/member/register.do}" method="post" th:object="${member}">
+
+        <h2>회원가입</h2>
+
+	    <div>
+	        <label for="memberId">아이디:</label>
+	        <input type="text" id="memberId" name="memberId" th:field="*{memberId}" required>
+	        <span id="duplicateMessage"></span>
+	        <button type="button" id="duplicateButton" onclick="checkDuplicateMemberId()">아이디 중복 확인</button>
+	        <br></br>
+	    </div>
+
+        <div>
+            <label for="memberPw">비밀번호:</label>
+            <input type="password" id="memberPw" name="memberPw" th:field="*{memberPw}" required>
+        </div>
+
+        <div>
+            <label for="memberName">이름:</label>
+            <input type="text" id="memberName" name="memberName" th:field="*{memberName}" required>
+        </div>
+
+        <div>
+            <label for="memberMail">이메일:</label>
+            <input type="email" id="memberMail" name="memberMail" th:field="*{memberMail}" required>
+        </div>
+
+        <div>
+            <label for="memberGender">성별:</label>
+            <select id="memberGender" name="memberGender" th:field="*{memberGender}" required>
+            	<option value="" >성별을 선택해주세요</option>
+                <option value="M">남성</option>
+                <option value="F">여성</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="memberBirthday">생년월일:</label>
+            <input type="date" id="memberBirthday" name="memberBirthday" th:field="*{memberBirthday}" required>
+        </div>
+
+        <div>
+            <button type="submit" id="registerButton">회원가입</button>
+        </div>
+
+    </form>
+    <script>
+    var idConfirmed = false; // 아이디 확인 상태를 추적하는 플래그
+    
+    // 아이디 중복 확인 버튼 클릭 이벤트
+    $("#duplicateButton").click(function() {
+        checkDuplicateMemberId();
+    });
+
+    // 폼 제출 이벤트
+    $("form").submit(function(event) {
+        // 중복 확인이 되지 않은 상태에서는 회원가입 제출을 막음
+        if ($("#duplicateMessage").text() !== "사용 가능한 아이디입니다.") {
+            event.preventDefault(); // 폼 제출 방지
+            $("#duplicateMessage").text("아이디 중복 확인을 해주세요.");
+            $("#duplicateMessage").css("color", "#ff0000");
+            $("#duplicateButton").css("border", "1px solid #ff0000");
+            $("#memberId").css("border", "1px solid #ff0000");
+        }
+    });
+    
+    function checkDuplicateMemberId() {
+        var memberId = $("#memberId").val();
+    
+        if (memberId.trim() === "") {
+            $("#duplicateMessage").text("아이디를 입력하세요.");
+            $("#duplicateMessage").css("color", "#ff0000");
+            $("#duplicateButton").css("border", "1px solid #ff0000");
+            $("#memberId").css("border", "1px solid #ff0000");
+            $("#registerButton").prop("disabled", true);
+            return false;  // 폼 제출 방지
+        }
+    
+        // Ajax 통신으로 중복 확인
+        $.ajax({
+            type: "POST",
+            url: "/member/count.do",
+            data: { memberId: memberId },
+            success: function(response) {
+                if (response.duplicate) {
+                    $("#duplicateMessage").text("이미 사용 중인 아이디입니다.");
+                    $("#duplicateMessage").css("color", "#ff0000");
+                    $("#duplicateButton").css("border", "1px solid #ff0000");
+                    $("#memberId").css("border", "1px solid #ff0000");
+                    $("#registerButton").prop("disabled", true);
+                } else {
+                    $("#duplicateMessage").text("사용 가능한 아이디입니다.");
+                    $("#duplicateMessage").css("color", "#4caf50");
+                    $("#duplicateButton").css("border", "1px solid #4caf50");
+                    $("#memberId").css("border", "1px solid #4caf50");
+                    $("#registerButton").prop("disabled", false);
+                }
+            },
+            error: function() {
+                $("#duplicateMessage").text("서버 오류로 중복 확인에 실패했습니다.");
+                $("#duplicateMessage").css("color", "#ff0000");
+                $("#duplicateButton").css("border", "1px solid #ff0000");
+                $("#memberId").css("border", "1px solid #ff0000");
+                $("#registerButton").prop("disabled", true);
+            }
+        });
+    }
+    
+    function disableInputFields() {
+    if (idConfirmed) {
+        $("#memberId").prop("readonly", true);
+        $("#memberPw").prop("readonly", true);
+        $("#memberName").prop("readonly", true);
+        $("#memberMail").prop("readonly", true);
+        $("#memberGender").prop("disabled", true);
+        $("#memberBirthday").prop("readonly", true);
+        $("#duplicateButton").prop("disabled", true);
+    }
+}
+    </script>
+</body>
+</html>

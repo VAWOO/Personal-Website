@@ -70,7 +70,7 @@ public class BoardController extends UiUtils
 		return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list.do", Method.GET, pagingParams, model);
 	}
 	
-	@GetMapping(value = "/board/list.do")
+	@GetMapping(value = "/board")
 	public String openBoardList(@ModelAttribute("params") BoardDTO params, HttpServletRequest request, Model model)
 	{
 		List<BoardDTO> boardList = boardService.getBoardList(params);

@@ -24,7 +24,7 @@ public class MemberController extends UiUtils
 	@Autowired
 	private MemberService memberService;
 	
-	@GetMapping(value = "/member/join.do")
+	@GetMapping(value = "/join")
 	public String openMemberJoin(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
 	{
 		if (memberId == null)
@@ -44,7 +44,7 @@ public class MemberController extends UiUtils
 		return "member/join";
 	}
 	
-	@GetMapping(value = "/member/login.do")
+	@GetMapping(value = "/login")
 	public String openMemberLogin(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
 	{
 		if (memberId == null)

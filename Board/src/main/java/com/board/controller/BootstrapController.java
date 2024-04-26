@@ -18,4 +18,16 @@ public class BootstrapController
     {
         return "bootstrap/resume";
     }
+    
+    @GetMapping("/projects")
+    public String projects(Model model)
+    {
+        return "bootstrap/projects";
+    }
+    
+    @GetMapping("/contact")
+    public String contact(Model model)
+    {
+        return "bootstrap/contact";
+    }
 }

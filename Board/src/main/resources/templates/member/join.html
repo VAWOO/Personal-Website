@@ -135,6 +135,25 @@
 
     </form>
     <script>
+    var idConfirmed = false; // 아이디 확인 상태를 추적하는 플래그
+    
+    // 아이디 중복 확인 버튼 클릭 이벤트
+    $("#duplicateButton").click(function() {
+        checkDuplicateMemberId();
+    });
+    
+    // 폼 제출 이벤트
+    $("form").submit(function(event) {
+        // 중복 확인이 되지 않은 상태에서는 회원가입 제출을 막음
+        if ($("#duplicateMessage").text() !== "사용 가능한 아이디입니다.") {
+            event.preventDefault(); // 폼 제출 방지
+            $("#duplicateMessage").text("아이디 중복 확인을 해주세요.");
+            $("#duplicateMessage").css("color", "#ff0000");
+            $("#duplicateButton").css("border", "1px solid #ff0000");
+            $("#memberId").css("border", "1px solid #ff0000");
+        }
+    });
+    
     function checkDuplicateMemberId() {
         var memberId = $("#memberId").val();
     
@@ -159,12 +178,15 @@
                     $("#duplicateButton").css("border", "1px solid #ff0000");
                     $("#memberId").css("border", "1px solid #ff0000");
                     $("#registerButton").prop("disabled", true);
+                    idConfirmed = false; // 확인 상태 초기화
                 } else {
                     $("#duplicateMessage").text("사용 가능한 아이디입니다.");
                     $("#duplicateMessage").css("color", "#4caf50");
                     $("#duplicateButton").css("border", "1px solid #4caf50");
                     $("#memberId").css("border", "1px solid #4caf50");
                     $("#registerButton").prop("disabled", false);
+                    idConfirmed = true; // 확인 상태 설정
+                    disableInputFields(); // 입력 필드 비활성화
                 }
             },
             error: function() {
@@ -173,9 +195,19 @@
                 $("#duplicateButton").css("border", "1px solid #ff0000");
                 $("#memberId").css("border", "1px solid #ff0000");
                 $("#registerButton").prop("disabled", true);
+                idConfirmed = false; // 확인 상태 초기화
             }
         });
     }
+    
+	function disableInputFields() {
+	    if (idConfirmed) {
+	        $("#memberId").prop("readonly", true);
+	    } else {
+	        // 확인 상태가 아니면 모든 입력 필드를 활성화합니다.
+	        $("#memberId").prop("readonly", false);
+	    }
+	}
     </script>
 </body>
 </html>
