@@ -26,7 +26,7 @@ public class BoardController extends UiUtils
 	@Autowired
 	private BoardService boardService;
 	
-	@GetMapping(value = "/board/write.do")
+	@GetMapping(value = "/board/write")
 	public String openBoardWrite(@ModelAttribute("params") BoardDTO params, @RequestParam(value = "idx", required = false) Long idx, Model model)
 	{
 		if (idx == null)
@@ -38,7 +38,7 @@ public class BoardController extends UiUtils
 			BoardDTO board = boardService.getBoardDetail(idx);
 			if (board == null || "Y".equals(board.getDeleteYn()))
 			{
-				return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
+				return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list", Method.GET, null, model);
 			}
 			model.addAttribute("board", board);
 		}
@@ -46,7 +46,7 @@ public class BoardController extends UiUtils
 		return "board/write";
 	}
 	
-	@PostMapping(value = "/board/register.do")
+	@PostMapping(value = "/board/register")
 	public String registerBoard(@ModelAttribute("params") final BoardDTO params, Model model)
 	{
 		Map<String, Object> pagingParams = getPagingParams(params);
@@ -55,22 +55,22 @@ public class BoardController extends UiUtils
 			boolean isRegistered = boardService.registerBoard(params);
 			if (isRegistered == false)
 			{
-				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
+				return showMessageWithRedirect("게시글 등록에 실패하였습니다.", "/board/list", Method.GET, pagingParams, model);
 			}
 		}
 		catch (DataAccessException e)
 		{
-			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, pagingParams, model);
 		}
 		catch (Exception e)
 		{
-			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, pagingParams, model);
 		}
 		
-		return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list.do", Method.GET, pagingParams, model);
+		return showMessageWithRedirect("게시글 등록이 완료되었습니다.", "/board/list", Method.GET, pagingParams, model);
 	}
 	
-	@GetMapping(value = "/board")
+	@GetMapping(value = "/board/list")
 	public String openBoardList(@ModelAttribute("params") BoardDTO params, HttpServletRequest request, Model model)
 	{
 		List<BoardDTO> boardList = boardService.getBoardList(params);
@@ -80,30 +80,30 @@ public class BoardController extends UiUtils
 		return "board/list";
 	}
 	
-	@GetMapping(value = "/board/view.do")
+	@GetMapping(value = "/board/view")
 	public String openBoardDetail(@ModelAttribute("params") BoardDTO params, @RequestParam(value = "idx", required = false) Long idx, Model model)
 	{
 		if (idx == null)
 		{
-			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
 		}
 		
 		BoardDTO board = boardService.getBoardDetail(idx);
 		if(board == null || "Y".equals(board.getDeleteYn()))
 		{
-			return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다", "/board/list", Method.GET, null, model);
 		}
 		model.addAttribute("board", board);
 		
 		return "board/view";
 	}
 	
-	@PostMapping(value = "/board/delete.do")
+	@PostMapping(value = "/board/delete")
 	public String deleteBoard(@ModelAttribute("params") BoardDTO params, @RequestParam(value = "idx", required = false) Long idx, Model model)
 	{
 		if (idx == null)
 		{
-			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
 		}
 		
 		Map<String, Object> pagingParams = getPagingParams(params);
@@ -112,17 +112,17 @@ public class BoardController extends UiUtils
 		{
 			boolean isDeleted = boardService.deleteBoard(idx);
 			if (isDeleted == false)
-				return showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
+				return showMessageWithRedirect("게시글 삭제에 실패하였습니다.", "/board/list", Method.GET, pagingParams, model);
 		}
 		catch (DataAccessException e)
 		{
-			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, pagingParams, model);
 		}
 		catch (Exception e)
 		{
-			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list.do", Method.GET, pagingParams, model);
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, pagingParams, model);
 		}
 		
-		return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list.do", Method.GET, pagingParams, model);
+		return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list", Method.GET, pagingParams, model);
 	}
 }

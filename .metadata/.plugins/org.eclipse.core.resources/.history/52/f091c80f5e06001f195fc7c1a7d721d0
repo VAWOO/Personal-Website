@@ -1,0 +1,50 @@
+package com.board.controller;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.board.constant.Method;
+import com.board.domain.MemberDTO;
+
+@Controller
+public class BootstrapController
+{
+    @GetMapping("/")
+    public String index(Model model)
+    {
+        return "bootstrap/index";
+    }
+    
+    @GetMapping("/contact")
+    public String contact(Model model)
+    {
+        return "bootstrap/contact";
+    }
+    
+	@PostMapping(value = "/bootstrap/submit")
+	public String registerContact(@ModelAttribute("params") final MemberDTO params, Model model)
+	{
+		try
+		{
+			boolean isRegistered = memberService.registerMember(params);
+			if (isRegistered == false)
+			{
+				return showMessageWithRedirect("회원 등록에 실패하였습니다.", "/login", Method.GET, null, model);
+			}
+		}
+		catch (DataAccessException e)
+		{
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/login", Method.GET, null, model);
+		}
+		catch (Exception e)
+		{
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/login", Method.GET, null, model);
+		}
+		
+		return showMessageWithRedirect("회원 등록이 완료되었습니다.", "/login", Method.GET, null, model);
+	}
+}

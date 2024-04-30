@@ -43,8 +43,8 @@
 			</form>
 
 			<div class="btn_wrap text-center" th:object="${params}">
-				<a th:href="|@{/board/list.do}*{makeQueryString(currentPageNo)}|" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-				<a th:href="|@{/board/write.do}*{makeQueryString(currentPageNo)}&idx=${board.idx}|" class="btn btn-primary waves-effect waves-light">수정하기</a>
+				<a th:href="|@{/board/list}*{makeQueryString(currentPageNo)}|" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+				<a th:href="|@{/board/write}*{makeQueryString(currentPageNo)}&idx=${board.idx}|" class="btn btn-primary waves-effect waves-light">수정하기</a>
 				<button type="button" class="btn btn-danger waves-effect waves-light" th:onclick="deleteBoard([[ ${board.idx} ]], [[ *{makeQueryString(currentPageNo)} ]])">삭제하기</button>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 			/*<![CDATA[*/
 			function deleteBoard(idx, queryString) {
 				if (confirm(idx + "번 게시글을 삭제할까요?")) {
-					var uri = /*[[ @{/board/delete.do} ]]*/ null;
+					var uri = /*[[ @{/board/delete} ]]*/ null;
 					var html = "";
 			
 					html += '<form name="dataForm" action="'+uri+'" method="post">';

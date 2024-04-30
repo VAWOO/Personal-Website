@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>This page is a join page</title>
@@ -88,7 +88,7 @@
 </head>
 <body>
 
-    <form th:action="@{/member/register.do}" method="post" th:object="${member}">
+    <form th:action="@{/member/register}" method="post" th:object="${member}">
 
         <h2>회원가입</h2>
 
@@ -169,7 +169,7 @@
         // Ajax 통신으로 중복 확인
         $.ajax({
             type: "POST",
-            url: "/member/count.do",
+            url: "/member/count",
             data: { memberId: memberId },
             success: function(response) {
                 if (response.duplicate) {

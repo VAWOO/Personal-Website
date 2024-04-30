@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="duplicateButton"/>
+		<item key="selection" value=""/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="duplicateButton"/>
-			<item value="href"/>
-			<item value="profile"/>
-			<item value="about me"/>
-			<item value="design"/>
-			<item value="pro"/>
-			<item value="st0"/>
-			<item value="st"/>
-			<item value="resume"/>
-			<item value="do"/>
-			<item value="뒤로"/>
-			<item value=".js"/>
-			<item value="assets"/>
-			<item value=".css"/>
-			<item value=".assets"/>
+			<item value=".do"/>
+			<item value="data-sb-validations"/>
+			<item value="&quot;contactForm&quot;"/>
+			<item value="util"/>
+			<item value="submitButton"/>
+			<item value="btn btn-primary btn-lg disabled"/>
+			<item value="disabled"/>
+			<item value="btn btn-primary btn-lg"/>
+			<item value="button"/>
+			<item value="name"/>
+			<item value="register"/>
+			<item value="contactForm"/>
+			<item value="&lt;form"/>
+			<item value="form"/>
+			<item value="body"/>
 		</list>
 		<list key="replacehistory">
 		</list>

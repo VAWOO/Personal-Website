@@ -6,7 +6,7 @@
 	
 	<th:block layout:fragment="content">
 		<div class="card-content">
-			<form class="form-horizontal" th:action="@{/board/register.do}" th:object="${board}" method="post" onsubmit="return registerBoard(this)">
+			<form class="form-horizontal" th:action="@{/board/register}" th:object="${board}" method="post" onsubmit="return registerBoard(this)">
 				<!--/* update의 경우 서버로 전달할 게시글 번호 (PK) */-->
 				<input type="hidden" th:if="*{idx != null and idx > 0}" th:field="*{idx}" />
 				
@@ -46,7 +46,7 @@
 				</div>
 				
 				<div class="btn_wrap text-center" th:object="${params}">
-					<a th:href="|@{/board/list.do}*{makeQueryString(currentPageNo)}|" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+					<a th:href="|@{/board/list}*{makeQueryString(currentPageNo)}|" class="btn btn-default waves-effect waves-light">뒤로가기</a>
 					<button type="submit" class="btn btn-primary waves-effect waves-light">저장하기</button>
 				</div>				
 			</form>

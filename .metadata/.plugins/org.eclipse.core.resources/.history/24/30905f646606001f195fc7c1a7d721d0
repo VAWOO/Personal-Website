@@ -1,0 +1,13 @@
+package com.board.domain;
+
+public class ContactDTO
+{
+	private Long idx;
+	private String contactName;
+	private String contactMail;
+	private String contactPhone;
+	private String contactMessage;
+	
+	
+	
+}

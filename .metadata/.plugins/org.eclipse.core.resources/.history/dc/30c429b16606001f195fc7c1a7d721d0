@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.board.mapper.ContactMapper">
+
+	<sql id="ContactColumns">
+		  idx
+		, contact_name
+		, contact_mail
+		, contact_number
+		, contact_message
+		, insert_time
+	</sql>
+	
+	<insert id="insertContact" parameterType="ContactDTO">
+		INSERT INTO contact (<include refid="ContactColumns" />)
+		VALUES
+		(
+			  #{idx}
+			, #{contactName}
+			, #{contactMail}
+			, #{contactNumber}
+			, #{contactMessage}
+			, NOW()
+		)
+	</insert>
+</mapper>

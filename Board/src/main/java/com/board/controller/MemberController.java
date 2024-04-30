@@ -24,7 +24,7 @@ public class MemberController extends UiUtils
 	@Autowired
 	private MemberService memberService;
 	
-	@GetMapping(value = "/join")
+	@GetMapping(value = "/member/join")
 	public String openMemberJoin(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
 	{
 		if (memberId == null)
@@ -36,7 +36,7 @@ public class MemberController extends UiUtils
 			MemberDTO member = memberService.getMemberDetail(memberId);
 			if (member == null || "Y".equals(member.getDeleteYn()))
 			{
-				return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list.do", Method.GET, null, model);
+				return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/member/join", Method.GET, null, model);
 			}
 			model.addAttribute("member", member);
 		}
@@ -44,7 +44,7 @@ public class MemberController extends UiUtils
 		return "member/join";
 	}
 	
-	@GetMapping(value = "/login")
+	@GetMapping(value = "/member/login")
 	public String openMemberLogin(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
 	{
 		if (memberId == null)
@@ -56,7 +56,7 @@ public class MemberController extends UiUtils
 			MemberDTO member = memberService.getMemberDetail(memberId);
 			if (member == null || "Y".equals(member.getDeleteYn()))
 			{
-				return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list.do", Method.GET, null, model);
+				return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/member/login", Method.GET, null, model);
 			}
 			model.addAttribute("member", member);
 		}
@@ -64,25 +64,25 @@ public class MemberController extends UiUtils
 		return "member/login";
 	}
 	
-	@GetMapping(value = "/member/view.do")
+	@GetMapping(value = "/member/view")
 	public String openMemberDetail(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
 	{
 		if (memberId == null)
 		{
-			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
 		}
 		
 		MemberDTO member = memberService.getMemberDetail(memberId);
 		if(member == null || "Y".equals(member.getDeleteYn()))
 		{
-			return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("회원 가입한 이력이 없거나 이미 탈퇴한 회원입니다.", "/board/list", Method.GET, null, model);
 		}
 		model.addAttribute("member", member);
 		
 		return "member/view";
 	}
 	
-	@PostMapping(value = "/member/register.do")
+	@PostMapping(value = "/member/register")
 	public String registerMember(@ModelAttribute("params") final MemberDTO params, Model model)
 	{
 		try
@@ -90,22 +90,22 @@ public class MemberController extends UiUtils
 			boolean isRegistered = memberService.registerMember(params);
 			if (isRegistered == false)
 			{
-				return showMessageWithRedirect("회원 등록에 실패하였습니다.", "/board/list.do", Method.GET, null, model);
+				return showMessageWithRedirect("회원 등록에 실패하였습니다.", "/member/join", Method.GET, null, model);
 			}
 		}
 		catch (DataAccessException e)
 		{
-			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/member/join", Method.GET, null, model);
 		}
 		catch (Exception e)
 		{
-			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/member/join", Method.GET, null, model);
 		}
 		
-		return showMessageWithRedirect("회원 등록이 완료되었습니다.", "/board/list.do", Method.GET, null, model);
+		return showMessageWithRedirect("회원 등록이 완료되었습니다.", "/member/login", Method.GET, null, model);
 	}
 	
-	@PostMapping(value = "/member/login.do")
+	@PostMapping(value = "/member/login")
 	public String loginMember(@ModelAttribute("params") final MemberDTO params, Model model)
 	{
 		try
@@ -113,49 +113,49 @@ public class MemberController extends UiUtils
 			boolean isLogined = memberService.loginMember(params);
 			if (isLogined == false)
 			{
-				return showMessageWithRedirect("아이디 또는 비밀번호가 틀렸습니다.", "/board/list.do", Method.GET, null, model);
+				return showMessageWithRedirect("아이디 또는 비밀번호가 틀렸습니다.", "/member/login", Method.GET, null, model);
 			}
 		}
 		catch (DataAccessException e)
 		{
-			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/member/login", Method.GET, null, model);
 		}
 		catch (Exception e)
 		{
-			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/member/login", Method.GET, null, model);
 		}
 		
-		return showMessageWithRedirect("로그인 완료되었습니다.", "/board/list.do", Method.GET, null, model);
+		return showMessageWithRedirect("로그인 완료되었습니다.", "/board/list", Method.GET, null, model);
 	}
 	
-	@PostMapping(value = "/member/delete.do")
+	@PostMapping(value = "/member/delete")
 	public String deleteMember(@ModelAttribute("params") MemberDTO params, @RequestParam(value = "memberId", required = false) String memberId, Model model)
 	{
 		if (memberId == null)
 		{
-			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("올바르지 않은 접근입니다.", "/board/list", Method.GET, null, model);
 		}
 		
 		try
 		{
 			boolean isDeleted = memberService.deleteMember(memberId);
 			if (isDeleted == false)
-				return showMessageWithRedirect("회원 탈퇴에 실패하였습니다.", "/board/list.do", Method.GET, null, model);
+				return showMessageWithRedirect("회원 탈퇴에 실패하였습니다.", "/board/list", Method.GET, null, model);
 		}
 		catch (DataAccessException e)
 		{
-			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}
 		catch (Exception e)
 		{
-			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list.do", Method.GET, null, model);
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/board/list", Method.GET, null, model);
 		}
 		
-		return showMessageWithRedirect("회원 탈퇴가 완료되었습니다.", "/board/list.do", Method.GET, null, model);
+		return showMessageWithRedirect("회원 탈퇴가 완료되었습니다.", "/board/list", Method.GET, null, model);
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "/member/count.do")
+	@PostMapping(value = "/member/count")
 	public Map<String, Boolean> countByLoginId(@RequestParam(value = "memberId", required = false) String memberId)
 	{
 	    Map<String, Boolean> response = new HashMap<>();

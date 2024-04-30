@@ -1,0 +1,8 @@
+package com.board.mapper;
+
+import com.board.domain.MemberDTO;
+
+public class ContactMapper
+{
+	public int insertContact(ContactDTO params);
+}

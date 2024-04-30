@@ -1,0 +1,56 @@
+package com.board.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import com.board.constant.Method;
+import com.board.domain.ContactDTO;
+import com.board.service.ContactService;
+import com.board.util.UiUtils;
+
+@Controller
+public class BootstrapController extends UiUtils
+{
+	@Autowired
+	private ContactService contactService;
+	
+    @GetMapping("/")
+    public String index(Model model)
+    {
+        return "bootstrap/index";
+    }
+    
+    @GetMapping("/contact")
+    public String contact(Model model)
+    {
+        return "bootstrap/contact";
+    }
+    
+	@PostMapping(value = "/bootstrap/register")
+	public String registerContact(@ModelAttribute("params") final ContactDTO params, Model model)
+	{
+		try
+		{
+			boolean isRegistered = contactService.registerContact(params);
+			if (isRegistered == false)
+			{
+				return showMessageWithRedirect("제출에 실패하였습니다.", "/contact", Method.GET, null, model);
+			}
+		}
+		catch (DataAccessException e)
+		{
+			return showMessageWithRedirect("데이터베이스 처리 과정에 문제가 발생하였습니다.", "/contact", Method.GET, null, model);
+		}
+		catch (Exception e)
+		{
+			return showMessageWithRedirect("시스템에 문제가 발생하였습니다.", "/contact", Method.GET, null, model);
+		}
+		
+		return showMessageWithRedirect("제출이 완료되었습니다.", "/contact", Method.GET, null, model);
+	}
+}

@@ -30,7 +30,7 @@
 					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></button>
 					<div class="dropdown-menu dropdown-menu-right" role="menu">
 						<!--/* 검색 form */-->
-						<form id="searchForm" th:action="@{/board/list.do}" method="get" onsubmit="return searchBoard(this)" class="form-horizontal" role="form">
+						<form id="searchForm" th:action="@{/board/list}" method="get" onsubmit="return searchBoard(this)" class="form-horizontal" role="form">
 							<!-- /* 현재 페이지 번호, 페이지당 출력할 데이터 개수, 페이지 하단에 출력할 페이지 개수 Hidden 파라미터 */ -->
 							<input type="hidden" name="currentPageNo" value="1" />
 							<input type="hidden" name="recordsPerPage" th:value="${params.recordsPerPage}" />
@@ -68,11 +68,11 @@
           <div class="collapse navbar-collapse" id="navbarsExampleDefault">
               <ul class="navbar-nav mr-auto">
                   <li class="nav-item" th:classappend="${menu} == 'home'? 'active'">
-                      <a class="nav-link" href="#" th:href="@{/board/list.do}">홈 <span class="sr-only"
+                      <a class="nav-link" href="#" th:href="@{/board/list}">홈 <span class="sr-only"
                               th:if="${menu} == 'home'">(current)</span></a>
                   </li>
                   <li class="nav-item" th:classappend="${menu} == 'board'? 'active'">
-                      <a class="nav-link" href="#" th:href="@{/board/list.do}">게시판 <span class="sr-only"
+                      <a class="nav-link" href="#" th:href="@{/board/list}">게시판 <span class="sr-only"
                               th:if="${menu} == 'board'">(current)</span></a>
                   </li>
               </ul>

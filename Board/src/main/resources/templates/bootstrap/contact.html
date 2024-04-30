@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -27,7 +27,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
                             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/board">Board</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/member/login">Board</a></li>
                             <li class="nav-item"><a class="nav-link" href="https://vawoo.notion.site/15d9d5823d9d4e309a273b6a3705a82c?pvs=4">Projects</a></li>
                             <li class="nav-item"><a class="nav-link" href="/contact">Contact</a></li>
                         </ul>
@@ -53,31 +53,31 @@
                                 <!-- To make this form functional, sign up at-->
                                 <!-- https://startbootstrap.com/solution/contact-forms-->
                                 <!-- to get an API token!-->
-                                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                                <form action="/contact/register" method="POST" id="contactForm" data-sb-form-api-token="API_TOKEN">
                                     <!-- Name input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                        <label for="name">Full name</label>
-                                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                                        <input class="form-control" id="contactName" name="contactName" type="text" placeholder="Enter your name..." required />
+                                        <label for="contactName">Full name</label>
+                                        <div class="invalid-feedback" data-sb-feedback="contactName:required">A name is required.</div>
                                     </div>
                                     <!-- Email address input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                                        <label for="email">Email address</label>
-                                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                                        <input class="form-control" id="contactMail" name="contactMail" type="email" placeholder="name@example.com" required />
+                                        <label for="contactMail">Email address</label>
+                                        <div class="invalid-feedback" data-sb-feedback="contactMail:required">An email is required.</div>
+                                        <div class="invalid-feedback" data-sb-feedback="contactMail:email">Email is not valid.</div>
                                     </div>
                                     <!-- Phone number input-->
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                                        <label for="phone">Phone number</label>
-                                        <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                                        <input class="form-control" id="contactPhone" name="contactPhone" type="tel" placeholder="(123) 456-7890" required />
+                                        <label for="contactPhone">Phone number</label>
+                                        <div class="invalid-feedback" data-sb-feedback="contactPhone:required">A phone number is required.</div>
                                     </div>
                                     <!-- Message input-->
                                     <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                                        <label for="message">Message</label>
-                                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                                        <textarea class="form-control" id="contactMessage" name="contactMessage" type="text" placeholder="Enter your message here..." style="height: 10rem" required></textarea>
+                                        <label for="contactMessage">Message</label>
+                                        <div class="invalid-feedback" data-sb-feedback="contactMessage:required">A message is required.</div>
                                     </div>
                                     <!-- Submit success message-->
                                     <!---->
@@ -97,7 +97,7 @@
                                     <!-- an error submitting the form-->
                                     <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
                                     <!-- Submit Button-->
-                                    <div class="d-grid"><button class="btn btn-primary btn-lg disabled" id="submitButton" type="submit">Submit</button></div>
+                                    <div class="d-grid"><button class="btn btn-primary btn-lg" type="submit">Submit</button></div>
                                 </form>
                             </div>
                         </div>
@@ -109,7 +109,7 @@
         <footer class="bg-white py-4 mt-auto">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0">Copyright &copy; Your Website 2023</div></div>
+                    <div class="col-auto"><div class="small m-0">Copyright &copy; VAWOO 2024</div></div>
                     <div class="col-auto">
                         <a class="small" href="#!">Privacy</a>
                         <span class="mx-1">&middot;</span>

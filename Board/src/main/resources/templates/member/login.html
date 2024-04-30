@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>This page is a login page</title>
@@ -59,7 +59,7 @@
     </style>
 </head>
 <body>
-    <form th:action="@{/member/login.do}" method="post" th:object="${member}">
+    <form th:action="@{/member/login}" method="post" th:object="${member}">
 
         <h2>로그인</h2>
 
@@ -84,7 +84,7 @@
         
         <!-- 회원가입 버튼 -->
 	    <div>
-	    	<button style="background-color: #2196F3;" onclick="window.location.href='/join'">회원가입</button>
+	    	<button style="background-color: #2196F3;" onclick="window.location.href='/member/join'">회원가입</button>
 	    </div>
     </form>
 
